@@ -51,13 +51,12 @@ export function HomePage() {
           </a>
         </Text>
         <TextField
-          type="text"
           placeholder="Bearer token"
           value={tokenInput}
-          onChange={(value: string | null) => setTokenInput(value ?? '')}
+          onChange={(value) => setTokenInput(value ?? '')}
           status={error ? 'alert' : undefined}
           caption={error ?? undefined}
-          width="full"
+          style={{ width: '100%' }}
         />
         <Button
           label="Сохранить"
