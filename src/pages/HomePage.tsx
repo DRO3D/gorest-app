@@ -6,18 +6,18 @@ import { Text } from '@consta/uikit/Text';
 import { ChoiceGroup } from '@consta/uikit/ChoiceGroup';
 import { useAuth } from '../hooks/useAuth';
 
-type Mode = { name: 'Пользователи'; value: 'users' } | { name: 'Посты'; value: 'posts' };
+type ModeItem = { name: string; value: 'users' | 'posts' };
 
-const MODES: Mode[] = [
+const MODES: ModeItem[] = [
   { name: 'Пользователи', value: 'users' },
   { name: 'Посты', value: 'posts' },
 ];
 
 export function HomePage() {
   const { token, setToken, clearToken } = useAuth();
-  const [tokenInput, setTokenInput] = useState(token);
+  const [tokenInput, setTokenInput] = useState<string>(token);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<Mode>(MODES[0]);
+  const [mode, setMode] = useState<ModeItem>(MODES[0]);
   const navigate = useNavigate();
 
   const handleSave = () => {
@@ -45,13 +45,16 @@ export function HomePage() {
           Введите Access Token
         </Text>
         <Text size="s" view="secondary" style={{ marginBottom: 16, display: 'block' }}>
-          Получить токен: <a href="https://gorest.co.in/my-account/access-tokens" target="_blank" rel="noreferrer">gorest.co.in/my-account/access-tokens</a>
+          Получить токен:{' '}
+          <a href="https://gorest.co.in/my-account/access-tokens" target="_blank" rel="noreferrer">
+            gorest.co.in/my-account/access-tokens
+          </a>
         </Text>
         <TextField
           type="text"
           placeholder="Bearer token"
           value={tokenInput}
-          onChange={(value) => setTokenInput(value ?? '')}
+          onChange={(value: string | null) => setTokenInput(value ?? '')}
           status={error ? 'alert' : undefined}
           caption={error ?? undefined}
           width="full"
@@ -78,9 +81,9 @@ export function HomePage() {
       <div style={{ marginBottom: 24 }}>
         <ChoiceGroup
           value={mode}
-          onChange={(value) => setMode(value)}
+          onChange={(value: ModeItem) => setMode(value)}
           items={MODES}
-          getItemLabel={(item) => item.name}
+          getItemLabel={(item: ModeItem) => item.name}
           name="mode"
           multiple={false}
         />
